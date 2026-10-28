@@ -286,7 +286,7 @@ const SEED = [
 
 Refunds under $500 can be approved directly by any support agent in the helpdesk. Mark the ticket as "Refund – Approved" and process it through the payment dashboard.
 
-Refunds of $500 or more need approval from the Operations Lead. Add the order number and reason to the #refund-approvals channel and wait for a written approval before processing.
+Refunds over $500 (large refunds) must be approved by the Operations Lead. Add the order number and reason to the #refund-approvals channel and wait for a written approval before processing.
 
 Refunds are returned to the original payment method within 5–7 business days. Store credit can be offered as an alternative and is issued instantly.
 
@@ -294,7 +294,7 @@ Damaged or wrong items are always refunded in full, including shipping, and the 
   { id: "d2", title: "Incident Response Runbook", body:
 `An incident is any outage, data issue or security event that affects customers. Severity 1 means the product is down for most users. Severity 2 means a major feature is broken. Severity 3 is a minor bug with a workaround.
 
-For a Severity 1 incident, page the on-call engineer immediately using the on-call tool and open an incident channel named #inc-date-shortname.
+For a Sev 1 (Severity 1) incident, page the on-call engineer immediately using the on-call tool and open an incident channel named #inc-date-shortname.
 
 The incident lead posts a status update every 30 minutes for Sev 1 and every 2 hours for Sev 2 until the issue is resolved.
 
@@ -302,13 +302,13 @@ Customer-facing communication goes on the status page within 15 minutes of decla
 
 Within 3 business days after resolution, the incident lead writes a blameless post-mortem covering timeline, root cause, impact and follow-up actions.` },
   { id: "d3", title: "New Hire Onboarding", body:
-`On day one, new hires receive their laptop, a company email account and access to Slack, Notion and the helpdesk. IT sets these up before the start date.
+`On their first day, new hires receive their laptop, a company email account and access to Slack, Notion and the helpdesk. IT sets these up before the start date.
 
-Each new hire is assigned an onboarding buddy from their team. The buddy holds a 15-minute check-in every day during the first week.
+Each new hire is assigned an onboarding buddy from their team. The buddy holds a daily 15-minute check-in during week one.
 
 During week one, new hires complete the product walkthrough, security training and read the core SOPs in the knowledge base.
 
-The manager sets 30-60-90 day goals in the first week and reviews progress at each milestone.
+The manager sets 30-60-90 goals during week one and reviews progress at each milestone.
 
 Access to production systems and customer data is only granted after security training is completed and the manager approves it in the access request form.` },
   { id: "d4", title: "Vendor Payments Process", body:
@@ -338,7 +338,7 @@ let busy = false;
 const STOP = new Set("a an the and or but if of to in on for with at by from is are was were be been do does did how what when where who why which can i we you it this that these those my our your their as about into than then so not no any all need needs should would will".split(" "));
 const tokenize = s => (s.toLowerCase().match(/[a-z0-9$]+/g) || [])
   .map(w => w.replace(/^\$/, "")).filter(w => w && !STOP.has(w))
-  .map(w => w.length > 4 ? w.replace(/(ing|ed|es|s)$/, "") : w);
+  .map(w => w.length > 4 ? w.replace(/(ing|ed|es|al|e|s)$/, "") : w);
 
 let index = [];
 function buildIndex() {
@@ -408,7 +408,7 @@ function renderEmpty() {
       <h3>What do you need to know?</h3>
       <p>Ask anything about your team's processes. Every answer links back to its source.</p>
       <div class="chips">
-        ${["Who approves a $700 refund?", "What do I do in a Sev 1 incident?", "When are vendors paid?", "What happens on a new hire's first day?"]
+        ${["Who approves a refund over $500?", "What do I do in a Sev 1 incident?", "When are vendors paid?", "What happens on a new hire's first day?"]
           .map(q => `<button class="chip">${q}</button>`).join("")}
       </div>
     </div>`;
